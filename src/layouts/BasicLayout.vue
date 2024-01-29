@@ -48,20 +48,25 @@
     <template v-slot:footerRender>
       <global-footer />
     </template>
+<!--    -->
+    <multi-tab v-if="settings.multiTab" />
     <router-view />
   </pro-layout>
 </template>
 
 <script>
-import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
+import { updateTheme } from '@ant-design-vue/pro-layout'
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
-import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
+import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE, TOGGLE_MULTI_TAB } from '@/store/mutation-types'
 
 import defaultSettings from '@/config/defaultSettings'
 import RightContent from '@/components/GlobalHeader/RightContent'
 import GlobalFooter from '@/components/GlobalFooter'
 import Ads from '@/components/Other/CarbonAds'
+import MultiTab from '@/components/MultiTab'
+import SettingDrawer from '@/components/SettingDrawer'
+import store from '@/store'
 
 export default {
   name: 'BasicLayout',
@@ -69,7 +74,8 @@ export default {
     SettingDrawer,
     RightContent,
     GlobalFooter,
-    Ads
+    Ads,
+    MultiTab
   },
   data () {
     return {
@@ -97,7 +103,8 @@ export default {
         colorWeak: defaultSettings.colorWeak,
 
         hideHintAlert: false,
-        hideCopyButton: false
+        hideCopyButton: false,
+        multiTab: defaultSettings.multiTab
       },
       // 媒体查询
       query: {},
@@ -109,7 +116,8 @@ export default {
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters
+      mainMenu: state => state.permission.addRouters,
+      multiTab: state => state.app.multiTab
     })
   },
   created () {
@@ -173,6 +181,9 @@ export default {
             this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fixed
           }
           break
+        case 'multiTab':
+          this.settings.multiTab = value
+          store.commit(TOGGLE_MULTI_TAB, value)
       }
     }
   }

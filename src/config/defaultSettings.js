@@ -23,6 +23,7 @@ export default {
   menu: {
     locale: true
   },
+  multiTab: true,
   title: 'Ant Design Pro',
   pwa: false,
   iconfontUrl: '',

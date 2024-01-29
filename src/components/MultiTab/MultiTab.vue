@@ -1,6 +1,6 @@
 <script>
 import events from './events'
-
+import { i18nRender } from '@/locales'
 export default {
   name: 'MultiTab',
   data () {
@@ -111,10 +111,9 @@ export default {
     // render
     renderTabPane (title, keyPath) {
       const menu = this.renderTabPaneMenu(keyPath)
-
       return (
         <a-dropdown overlay={menu} trigger={['contextmenu']}>
-          <span style={{ userSelect: 'none' }}>{ title }</span>
+          <span style={{ userSelect: 'none' }}>{i18nRender(title)}</span>
         </a-dropdown>
       )
     }

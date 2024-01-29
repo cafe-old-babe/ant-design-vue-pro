@@ -4,6 +4,7 @@ export default {
   'app.setting.pagestyle.dark': '暗色菜单风格',
   'app.setting.pagestyle.realdark': '暗黑模式',
   'app.setting.themecolor': '主题色',
+  'app.setting.multiTab': '多标签',
   'app.setting.navigationmode': '导航模式',
   'app.setting.content-width': '内容区域宽度',
   'app.setting.fixedheader': '固定 Header',
