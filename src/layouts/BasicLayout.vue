@@ -48,8 +48,8 @@
     <template v-slot:footerRender>
       <global-footer />
     </template>
-<!--    -->
     <multi-tab v-if="settings.multiTab" />
+    <!--    <page-header-wrapper v-else />-->
     <router-view />
   </pro-layout>
 </template>
@@ -104,7 +104,7 @@ export default {
 
         hideHintAlert: false,
         hideCopyButton: false,
-        multiTab: defaultSettings.multiTab
+        multiTab: this.multiTab
       },
       // 媒体查询
       query: {},

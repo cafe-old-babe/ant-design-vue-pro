@@ -39,10 +39,14 @@ const user = {
     Login ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
-          const result = response.result
-          storage.set(ACCESS_TOKEN, result.token, new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
-          commit('SET_TOKEN', result.token)
-          resolve()
+          if (response.code !== 200) {
+            reject(response)
+            return
+          }
+          const { token, expireAt } = response.data
+          storage.set(ACCESS_TOKEN, token, new Date(expireAt))
+          commit('SET_TOKEN', token)
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
@@ -54,7 +58,7 @@ const user = {
       return new Promise((resolve, reject) => {
         // 请求后端获取用户信息 /api/user/info
         getInfo().then(response => {
-          const { result } = response
+          const result = response.data
           if (result.role && result.role.permissions.length > 0) {
             const role = { ...result.role }
             role.permissions = result.role.permissions.map(permission => {

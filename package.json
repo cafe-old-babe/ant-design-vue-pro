@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --no-module",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "build:preview": "vue-cli-service build --no-module --mode preview",
     "lint:nofix": "vue-cli-service lint --no-fix",
     "lint:js": "eslint src/**/*.js --fix",

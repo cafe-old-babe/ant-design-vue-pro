@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Login: '/auth/login',
-  Logout: '/auth/logout',
+  Login: '/user/login',
+  Logout: '/user/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/auth/register',
   twoStepCode: '/auth/2step-code',
@@ -10,7 +10,8 @@ const userApi = {
   SendSmsErr: '/account/sms_err',
   // get my info
   UserInfo: '/user/info',
-  UserMenu: '/user/nav'
+  UserMenu: '/user/nav',
+  GetCaptcha: '/system/captcha'
 }
 
 /**
@@ -77,4 +78,7 @@ export function get2step (parameter) {
     method: 'post',
     data: parameter
   })
+}
+export async function getCaptcha () {
+  return request({ url: userApi.GetCaptcha, method: 'get' })
 }

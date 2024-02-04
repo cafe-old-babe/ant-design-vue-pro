@@ -14,7 +14,8 @@ Vue.use(Router)
 const createRouter = () =>
   new Router({
     mode: 'history',
-    routes: constantRouterMap
+    routes: constantRouterMap,
+    scrollBehavior: () => ({ y: 0 })
   })
 
 const router = createRouter()

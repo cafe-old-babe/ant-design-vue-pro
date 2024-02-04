@@ -42,19 +42,25 @@ const errorHandler = (error) => {
 }
 
 // request interceptor
-request.interceptors.request.use(config => {
+request.interceptors.request.use((config) => {
   const token = storage.get(ACCESS_TOKEN)
   // 如果 token 存在
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
-    config.headers[ACCESS_TOKEN] = token
+    // config.headers[ACCESS_TOKEN] = token
+    config.headers['Authorization'] = 'JWT ' + token.replace(/JWT /g, '')
   }
   return config
 }, errorHandler)
 
 // response interceptor
 request.interceptors.response.use((response) => {
-  return response.data
+  const token = storage.get(ACCESS_TOKEN)
+  if (response.headers.authorization && token !== response.headers.authorization) {
+    storage.set(ACCESS_TOKEN, response.headers.authorization)
+    store.commit('SET_TOKEN', response.headers.authorization)
+  }
+  return response.headers['content-disposition'] ? response : response.data
 }, errorHandler)
 
 const installer = {
@@ -66,7 +72,4 @@ const installer = {
 
 export default request
 
-export {
-  installer as VueAxios,
-  request as axios
-}
+export { installer as VueAxios, request as axios }

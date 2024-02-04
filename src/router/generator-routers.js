@@ -1,15 +1,18 @@
 // eslint-disable-next-line
 import * as loginService from '@/api/login'
-// eslint-disable-next-line
-import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
-
+// import { BasicLayout, BlankLayout, PageView, RouteView } from '@/layouts'
+// https://github.com/vueComponent/ant-design-vue-pro/issues/1314
 // 前端路由表 (基于动态)
 const constantRouterComponents = {
   // 基础页面 layout 必须引入
-  BasicLayout: BasicLayout,
-  BlankLayout: BlankLayout,
-  RouteView: RouteView,
-  PageView: PageView,
+  // BasicLayout: BasicLayout,
+  // BlankLayout: BlankLayout,
+  // RouteView: RouteView,
+  // PageView: PageView,
+  BasicLayout: import('@/layouts/BasicLayout'),
+  BlankLayout: import('@/layouts/BlankLayout'),
+  RouteView: import('@/layouts/RouteView'),
+  PageView: import('@/layouts/PageView'),
   '403': () => import(/* webpackChunkName: "error" */ '@/views/exception/403'),
   '404': () => import(/* webpackChunkName: "error" */ '@/views/exception/404'),
   '500': () => import(/* webpackChunkName: "error" */ '@/views/exception/500'),
@@ -68,7 +71,7 @@ const rootRouter = {
   name: 'index',
   path: '',
   component: 'BasicLayout',
-  redirect: '/dashboard',
+  redirect: '/dashboard/analysis',
   meta: {
     title: '首页'
   },
@@ -90,7 +93,7 @@ export const generatorDynamicRouter = token => {
       .getCurrentUserNav(token)
       .then(res => {
         console.log('generatorDynamicRouter response:', res)
-        const { result } = res
+        const result = res.data
         const menuNav = []
         const childrenNav = []
         //      后端数据, 根级树数组,  根级 PID
